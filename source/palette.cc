@@ -27,9 +27,12 @@
 #include "SDL.h"
 
 #include <stdio.h>
-#include <unistd.h>
 #include "types.h"
 #include "video.h"
+
+#ifndef WIN32
+#include <unistd.h>
+#endif
 
 Palette noir;
 

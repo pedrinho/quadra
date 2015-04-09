@@ -26,3 +26,13 @@
 /source/stamp-h1
 /test_version
 /wadder
+*.pdb
+packages
+*.obj
+Debug
+DebugQ
+*.opensdf
+*.sdf
+VisualC++/quadra2013.vcxproj.user
+*.dll
+VisualC++/quadra2013.v12.suo
