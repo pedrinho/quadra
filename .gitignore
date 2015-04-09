@@ -36,3 +36,6 @@ DebugQ
 VisualC++/quadra2013.vcxproj.user
 *.dll
 VisualC++/quadra2013.v12.suo
+ReleaseQ
+*.exe
+*.ilk
