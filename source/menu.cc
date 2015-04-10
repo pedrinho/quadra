@@ -599,7 +599,7 @@ void Menu_multi_join::refresh_player() {
   Listgame *lg = (Listgame *) list_game->get_selected();
   Packet_gameinfo *p = lg->p;
 
-  for(int i=0; i<p->players.size(); i++) {
+  for (size_t i = 0; i<p->players.size(); i++) {
     char name[256];
     strcpy(name, p->players[i]->name);
     if(p->players[i]->idle==3)
@@ -1846,7 +1846,8 @@ void Menu_stat::set_sort(int quel) {
 }
 
 void Menu_stat::change_page(int p) {
-  int i, last_page=0;
+  int last_page=0;
+  size_t i;
   for(i=0; i<col.size(); i++) {
     if(col[i]->page == active_page) {
       col[i]->z_titre->disable();
@@ -1934,7 +1935,7 @@ void Menu_stat::display() {
           Font *color = fcourrier[team];
 
           int px = c_start;
-          for(int j=0; j<col.size(); j++) {
+		  for (size_t j = 0; j<col.size(); j++) {
             if(col[j]->page == active_page) {
               zone.push_back(new Zone_text_numeric(color, inter, score.stats[i].stats[col[j]->quel_stat].get_address(), px, y, col[j]->width-c_gap));
               px += col[j]->width;
@@ -1948,7 +1949,7 @@ void Menu_stat::display() {
       zone.push_back(new Zone_text(fteam[team], inter, ST_TOTAL, 15, y));
       int px = c_start;
       Font *color = fcourrier[team];
-      for(int j=0; j<col.size(); j++) {
+	  for (size_t j = 0; j<col.size(); j++) {
         if(col[j]->page == active_page) {
           zone.push_back(new Zone_text_numeric(color, inter, score.team_stats[team].stats[col[j]->quel_stat].get_address(), px, y, col[j]->width-c_gap));
           px += col[j]->width;
@@ -2036,7 +2037,7 @@ void Menu_stat::step() {
         exec(new Join_game(bit, inter->font, font2, pal, NULL, 0, 0, true));
       }
     }
-    int i;
+	size_t i;
     for(i=0; i<col.size(); i++) {
       if(result == col[i]->z_titre) {
         set_sort(i);
@@ -2063,7 +2064,7 @@ Menu_multi_checkip::Menu_multi_checkip(Bitmap *bit, Font *font, Font *font2, con
   new Zone_text(inter, ST_HOSTLIST, 170, 140);
   Zone_listbox *list;
   list = new Zone_listbox2(inter, bit, font2, NULL, 310, 140, 160, 200);
-  for(int i=0; i<net->host_adr.size(); i++) {
+  for (size_t i = 0; i<net->host_adr.size(); i++) {
     Net::stringaddress(st, net->host_adr[i]);
     list->add_item(st);
   }

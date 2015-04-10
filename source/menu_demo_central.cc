@@ -278,7 +278,8 @@ void Menu_demo_central::populate_dict(Dict *d) {
 	cw[3] = 90;
 	cx[4] = cx[3] + cw[3] + 5;
 	cw[4] = 80;
-	int y=220, ys=21, i, j;
+	int y=220, ys=21, j;
+	size_t i;
 	zone.push_back(new Zone_text(fteam[7], inter, ST_PLAYERS, cx[0], y));
 	if(!play->single()) {
 		zone.push_back(new Zone_text(fteam[7], inter, ST_RESULTFRAG, cx[1], y));

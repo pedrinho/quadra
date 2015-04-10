@@ -65,7 +65,7 @@ public:
 
 class Zone_listtext: public Zone_text {
 	Zone_listbox *parent;
-	int quel;
+	size_t quel;
 	bool high;
 public:
 	Zone_listtext(Zone_listbox *par, int i);

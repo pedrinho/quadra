@@ -73,7 +73,7 @@ void Zone_listbox::dirt() {
 		Zone_watch_int::dirt();
 		zup->dirt();
 		zdown->dirt();
-		for(int i=0; i<list.size(); i++)
+		for (size_t i = 0; i<list.size(); i++)
 			list[i]->dirt();
 	}
 }
@@ -82,7 +82,7 @@ void Zone_listbox::enable() {
 	Zone_watch_int::enable();
 	zup->enable();
 	zdown->enable();
-	for(int i=0; i<list.size(); i++)
+	for (size_t i = 0; i<list.size(); i++)
 		list[i]->enable();
 }
 
@@ -90,7 +90,7 @@ void Zone_listbox::disable() {
 	Zone_watch_int::disable();
 	zup->disable();
 	zdown->disable();
-	for(int i=0; i<list.size(); i++)
+	for (size_t i = 0; i<list.size(); i++)
 		list[i]->disable();
 }
 
@@ -109,7 +109,7 @@ void Zone_listbox::end_sort() {
   qsort((void *) &sort_list.front(), sort_list.size(),
         sizeof(sort_list.front()), compare_sort);
 
-	for (int i = 0; i < sort_list.size(); ++i)
+  for (size_t i = 0; i < sort_list.size(); ++i)
 		add_item(sort_list[i]);
 
 	sort_list.clear();
@@ -134,7 +134,7 @@ void Zone_listbox::replace_item(int i, Listable *e) {
 }
 
 void Zone_listbox::remove_item(Listable *e) {
-	int i;
+	size_t i;
 	for(i=0; i<elements.size(); i++)
 		if(elements[i]==e)
 			break;
@@ -174,21 +174,21 @@ void Zone_listbox::process() {
 }
 
 int Zone_listbox::search(Listable *source) {
-	for(int i=0; i<elements.size(); i++)
+	for (size_t i = 0; i<elements.size(); i++)
 		if(elements[i]->is_equal(source))
 			return i;
 	return -1;
 }
 
 bool Zone_listbox::in_listbox(const Zone *z) {
-	for(int i=0; i<list.size(); i++)
+	for (size_t i = 0; i<list.size(); i++)
 		if(list[i] == z)
 			return true;
 	return false;
 }
 
 void Zone_listbox::sync_list() {
-	for(int i=0; i<list.size(); i++) {
+	for (size_t i = 0; i<list.size(); i++) {
 		Font *f = inter->font;
 		list[i]->kb_focusable = false;
 		if(i+first_item >= elements.size()) {
@@ -226,7 +226,7 @@ void Zone_listbox::clear() {
 void Zone_listbox::unselect() {
 	if(!val)
 		return;
-	if(*val >= first_item && *val < first_item+list.size()) {
+	if (*val >= first_item && *val < first_item + static_cast<int>(list.size())) {
 		Font *f = inter->font;
 		if(elements[*val]->font)
 			f = elements[*val]->font;
@@ -239,7 +239,7 @@ void Zone_listbox::select(int q) {
 	if(!val)
 		return;
 	*val = q;
-	if(*val >= first_item && *val < first_item+list.size()) {
+	if (*val >= first_item && *val < first_item + static_cast<int>(list.size())) {
 		list[*val-first_item]->set_font(font2);
 	}
 }
@@ -289,7 +289,7 @@ Zone_listdown::Zone_listdown(Zone_listbox *par):
 }
 
 void Zone_listdown::clicked(int quel) {
-	if(parent->first_item < parent->elements.size() - parent->list.size()) {
+	if (parent->first_item < static_cast<int>(parent->elements.size() - parent->list.size())) {
 		parent->first_item++;
 		parent->sync_list();
 		parent->clicked(quel);

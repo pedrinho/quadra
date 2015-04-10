@@ -88,7 +88,7 @@ void Packet_gameinfo::write(Net_buf *p) {
 	p->write_byte(version);
 	p->write_dword(port);
 	p->write_byte(players.size());
-	int i;
+	size_t i;
 	for(i=0; i<players.size(); i++) {
 		p->write_byte(players[i]->team);
 		p->write_string(players[i]->name);
@@ -198,7 +198,7 @@ void Packet_gameserver::write(Net_buf *p) {
 	p->write_word(delay_start);
 	p->write_byte(game_end);
 	p->write_dword(game_end_value);
-	int i;
+	size_t i;
 	for(i=0; i<players.size(); i++) {
 		p->write_byte(players[i]->quel);
 		p->write_byte(players[i]->team);
@@ -503,7 +503,7 @@ bool Packet_stat::read(Net_buf *p) {
 void Packet_stat::write(Net_buf *p) {
 	Packet_playerbase::write(p);
 	p->write_byte(net_stats.size());
-	for(int i=0; i<net_stats.size(); i++) {
+	for(size_t i=0; i<net_stats.size(); i++) {
 		p->write_byte(net_stats[i]->st);
 		p->write_dword(net_stats[i]->value);
 	}
@@ -538,7 +538,7 @@ bool Packet_gamestat::read(Net_buf *p) {
 void Packet_gamestat::write(Net_buf *p) {
 	Packet_tcp::write(p);
 	p->write_byte(net_stats.size());
-	for(int i=0; i<net_stats.size(); i++) {
+	for(size_t i=0; i<net_stats.size(); i++) {
 		p->write_byte(net_stats[i]->st);
 		p->write_dword(net_stats[i]->value);
 	}
@@ -988,7 +988,7 @@ void Packet_serverlog::write(Net_buf* p) {
 	Packet_tcp::write(p);
 	p->write_string(event_type);
 	p->write_dword(vars.size());
-	for(int i=0; i<vars.size(); i++)
+	for (size_t i = 0; i<vars.size(); i++)
 		vars[i].write(p);
 }
 

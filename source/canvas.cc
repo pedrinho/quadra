@@ -124,7 +124,7 @@ Canvas::~Canvas() {
   delete_bloc();
   if(sprlevel_up)
     delete sprlevel_up;
-  for (int i = 0; i < watchers.size(); ++i)
+  for (size_t i = 0; i < watchers.size(); ++i)
     delete watchers[i];
 }
 
@@ -1074,7 +1074,7 @@ void Canvas::add_watcher(Watcher *w) {
 }
 
 void Canvas::remove_watcher(Net_connection *nc) {
-  for(int i=0; i<watchers.size(); i++)
+	for (size_t i = 0; i<watchers.size(); i++)
     if(watchers[i]->nc == nc) {
       delete watchers[i];
       watchers.erase(watchers.begin() + i);

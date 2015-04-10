@@ -335,7 +335,7 @@ int Net_list::canvas2player(Canvas *c) {
 }
 
 void Net_list::step_all() {
-	int i;
+	size_t i;
 
 	if(recording)
 		recording->step();
@@ -1197,7 +1197,7 @@ void Net_list::check_stat() {
 			Canvas *c=get(p->player);
 			if(c && !c->wait_download) {
 				if(!c->islocal()) {
-					for(int i=0; i<p->net_stats.size(); i++) {
+					for (size_t i = 0; i<p->net_stats.size(); i++) {
 						Net_stat *ns=p->net_stats[i];
 						c->stats[ns->st].set_value(ns->value);
 					}
@@ -1222,7 +1222,7 @@ void Net_list::check_stat() {
 	{
 		Packet_gamestat *p=(Packet_gamestat *) game->peekpacket(P_GAMESTAT);
 		if(p) {
-			for(int i=0; i>p->net_stats.size(); i++) {
+			for (size_t i = 0; i>p->net_stats.size(); i++) {
 				Net_stat *ns=p->net_stats[i];
 				*(game->stats[ns->st].get_address())=ns->value;
 			}
@@ -1368,8 +1368,7 @@ void Net_list::check_player() { // check for player joins
 void Net_list::check_admin() {
 	if(!game->server)
 		return;
-	int co;
-	for(co=0; co<net->connections.size(); co++) {
+	for (size_t co = 0; co<net->connections.size(); co++) {
 		Net_connection *nc=net->connections[co];
 		if(!nc->packet_based && nc->incoming->size()) {
 			uint8_t *buf=nc->incoming->get();
@@ -1405,7 +1404,7 @@ bool Net_list::accept_connection(Net_connection *nc) {
 	if(nc==game->loopback_connection)
 		return true;
 	bool ret=true;
-	int i;
+	size_t i;
 	for(i=0; i<deny_list.size(); i++) {
 		IP_addr *ip=deny_list[i];
 		IP_addr c(nc->address());
@@ -1426,7 +1425,7 @@ bool Net_list::accept_connection(Net_connection *nc) {
 }
 
 void Net_list::client_deconnect(Net_connection *nc) {
-	int i;
+	size_t i;
 	//Clean up command cache
 	for(i=0; i<cmd_cache.size(); i++) {
 		if(cmd_cache[i]->nc == nc) {
@@ -1477,7 +1476,7 @@ void Net_list::got_admin_line(const char *line, Net_connection *nc) {
 	else {
 		params[0]=0;
 	}
-	int i;
+	size_t i;
 	if(!cmd[0]) {
 		//Repeat last command
 		for(i=0; i<cmd_cache.size(); i++)
@@ -1856,7 +1855,7 @@ void Net_list::got_admin_line(const char *line, Net_connection *nc) {
 	if(!strcmp(cmd, "stack") && trusted) {
 		send_msg(nc, "Dumping game stack. overmind framecount is %i:", overmind.framecount);
 		send_msg(nc, "stack size=%i:", game->stack.size());
-		for(int j=0; j<game->stack.size(); j++) {
+		for (size_t j = 0; j<game->stack.size(); j++) {
 			Packet *p = game->stack[j];
 			if(net && net->net_param) {
 				char st[4096];
@@ -1866,8 +1865,8 @@ void Net_list::got_admin_line(const char *line, Net_connection *nc) {
 		}
 	}
 	if(!strcmp(cmd, "in") && trusted) {
-		int i, c=0;
-		for(i=0; i<net->connections.size(); i++) {
+		int c=0;
+		for (size_t i = 0; i<net->connections.size(); i++) {
 			Net_connection *nc2=net->connections[i];
 			if(nc2 && nc2!=game->loopback_connection && nc2->packet_based && nc2->joined) {
 				char st[64];
@@ -1879,7 +1878,7 @@ void Net_list::got_admin_line(const char *line, Net_connection *nc) {
 		send_msg(nc, "Total: %i", c);
 	}
 	if(!strcmp(cmd, "netstat") && trusted) {
-		int i;
+		size_t i;
 		send_msg(nc, "Incoming (min, max, nz-avg):");
 		for(i=0; i<net->connections.size(); i++) {
 			Net_connection *nc2=net->connections[i];
@@ -1903,7 +1902,7 @@ void Net_list::got_admin_line(const char *line, Net_connection *nc) {
 	bool allow=!strcmp(cmd, "allow");
 	bool deny=!strcmp(cmd, "deny");
 	if((allow || deny) && trusted) {
-		int i;
+		size_t i;
 		char st[64];
 		if(params[0]) {
 			IP_addr ad(params);

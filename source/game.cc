@@ -142,7 +142,7 @@ Game::Game(const Packet_gameserver *p) {
 	game_end = (End_type) p->game_end;
 	game_end_value = p->game_end_value;
 	game_public = false; // inutile pour les clients (info pour serveur seulement)
-	for(int i=0; i<p->players.size(); i++) {
+	for (size_t i = 0; i<p->players.size(); i++) {
 		Canvas *canvas=new Canvas(seed, p->players[i]->team, p->players[i]->name, 2, 2, true, true, p->players[i]->handicap, net->server_addr(), 0, true); //On connait pas repeat, smooth, shadow mais on s'en tappe parce qu'on est pas en playback
 		canvas->set_id(p->players[i]->player_id);
 		net_list.set_player(canvas, p->players[i]->quel, false);
@@ -277,7 +277,7 @@ void Game::restart() {
 
 	msgbox("Game::restart: restarting game now.\n");
 	//Make all currently joined connections not joined
-	int i;
+	size_t i;
 	if(net->active) {
 		for(i=0; i<net->connections.size(); i++) {
 			Net_connection *nc = net->connections[i];
@@ -611,7 +611,7 @@ void Game::addgameinfo(Textbuf *tb) {
 	tb->append("name %s\n", name);
 	tb->append("version %i\n", net_version());
 	tb->append("address");
-	for(int a=0; a<net->host_adr_pub.size(); ++a) {
+	for (size_t a = 0; a<net->host_adr_pub.size(); ++a) {
 		uint32_t ip = net->host_adr_pub[a];
 		tb->append(" %i.%i.%i.%i", ip>>24, (ip>>16)&255, (ip>>8)&255, ip&255);
 	}

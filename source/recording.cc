@@ -396,7 +396,7 @@ void Playback::shit_skipper2000(bool remove_chat) {
 	uint32_t shit_skipper_bias=0;
 	bool got_pause=false;
 	bool got_player=false;
-	int i;
+	size_t i;
 	for(i=0; i<packets.size(); i++) {
 		Demo_packet *dp=packets[i];
 		if(dp->p && dp->p->packet_id==P_PLAYER) {

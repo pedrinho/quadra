@@ -37,7 +37,7 @@ Dict::Dict(const char *k, const char *v) {
 }
 
 Dict::~Dict() {
-	for (int i = 0; i < sub.size(); ++i)
+	for (size_t i = 0; i < sub.size(); ++i)
 		delete sub[i];
 }
 
@@ -71,7 +71,7 @@ void Dict::add(const char *s) {
 
 void Dict::dump() const {
 	if(!sub.empty()) {
-		for(int i=0; i<sub.size(); i++) {
+		for (size_t i = 0; i<sub.size(); i++) {
 			msgbox("%s / ", key);
 			sub[i]->dump();
 		}
@@ -97,7 +97,7 @@ const char *Dict::find(const char *s) const {
 }
 
 Dict *Dict::find_sub(const char *s) {
-	for(int i=0; i<sub.size(); i++) {
+	for (size_t i = 0; i<sub.size(); i++) {
 		if(strcmp(sub[i]->key, s) == 0) {
 			return sub[i];
 		}
@@ -105,7 +105,7 @@ Dict *Dict::find_sub(const char *s) {
 	return NULL;
 }
 
-Dict *Dict::get_sub(const int i) {
+Dict *Dict::get_sub(const unsigned int i) {
 	if(i<sub.size())
 		return sub[i];
 	else
@@ -113,7 +113,7 @@ Dict *Dict::get_sub(const int i) {
 }
 
 const Dict *Dict::find_sub(const char *s) const {
-	for(int i=0; i<sub.size(); i++) {
+	for (size_t i = 0; i<sub.size(); i++) {
 		if(strcmp(sub[i]->key, s) == 0) {
 			return sub[i];
 		}
@@ -121,7 +121,7 @@ const Dict *Dict::find_sub(const char *s) const {
 	return NULL;
 }
 
-const Dict *Dict::get_sub(const int i) const {
+const Dict *Dict::get_sub(const unsigned int i) const {
 	if(i<sub.size())
 		return sub[i];
 	else

@@ -109,7 +109,7 @@ void Pane::hide() {
 }
 
 void Pane::hide_item() {
-	for(int i=0; i<zone.size(); i++)
+	for(size_t i=0; i<zone.size(); i++)
 		zone[i]->disable();
 	disable();
 }
@@ -122,7 +122,7 @@ void Pane::show() {
 }
 
 void Pane::show_item() {
-	for (int i = 0; i < zone.size(); i++)
+	for (size_t i = 0; i < zone.size(); i++)
 		zone[i]->enable();
 	enable();
 }
@@ -615,7 +615,7 @@ Pane_server_drop_connection::~Pane_server_drop_connection() {
 
 void Pane_server_drop_connection::notify() {
 	list_connection->clear();
-	for(int i=0; i<net->connections.size(); i++) {
+	for(size_t i=0; i<net->connections.size(); i++) {
 		Net_connection *nc=net->connections[i];
 		if(nc == game->loopback_connection)
 			continue; // skip the local address
@@ -701,7 +701,7 @@ Pane_server_ip::Pane_server_ip(const Pane_info &p): Pane_close(p) {
 	zone.push_back(new Zone_text(inter, ST_HOSTLIST, x+9, 140));
 	Zone_listbox *list;
 	list = new Zone_listbox2(inter, pi.fond, pi.font2, NULL, x+29, 160, 140, 200);
-	for(int i=0; i<net->host_adr.size(); i++) {
+	for(size_t i=0; i<net->host_adr.size(); i++) {
 		Net::stringaddress(st, net->host_adr[i]);
 		list->add_item(st);
 	}
@@ -771,7 +771,7 @@ void Pane_playerinfo::refresh() {
 	o_show_val=0;
 	int x2=x+11;
 	int y2=42, y_height=20;
-	int i;
+	size_t i;
 
 	for(i=0; i<MAXPLAYERS; i++)
 		player[i]=NULL;
@@ -1357,7 +1357,7 @@ void Pane_scoreboard::deactivate_frag(bool temp) {
 	if(b_show_frag && !temp)
 		b_show_frag->set_text("\2674");
 	show_frag=false;
-	for(int i=0; i<zlist_frag.size(); i++) {
+	for(size_t i=0; i<zlist_frag.size(); i++) {
 		for (vector<Zone*>::iterator it = zone.begin(); it != zone.end();
 		     ++it)
 			if (*it == zlist_frag[i]) {

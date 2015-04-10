@@ -143,8 +143,7 @@ void message(int color, const char *text, bool sound, bool in_packet, bool trust
 	chat_text->add_text(color, text, sound);
 	if(!game || !game->server)
 		return;
-	int co;
-	for(co=0; co<net->connections.size(); co++) {
+	for (size_t co = 0; co<net->connections.size(); co++) {
 		Net_connection *nc=net->connections[co];
 		if(nc && (nc->trusted || !trusted) && nc!=but && nc!=game->loopback_connection)
 			if(!in_packet || !nc->packet_based)

@@ -729,7 +729,7 @@ void Net::init_local_addresses() {
 				host_adr.push_back(ntohl(**curptr));
 			uint32_t fallback = INADDR_LOOPBACK;
 			//Even better than what the NetGames guys do! :)
-			for(int i=0; i<host_adr.size(); i++) {
+			for (size_t i = 0; i<host_adr.size(); i++) {
 				uint32_t a=host_adr[i];
 				bool pub = true;
 				//192.168/16 is not public
@@ -772,7 +772,7 @@ void Net::init_all_udp() {
 	if(!active)
 		return;
 	udpport = net_param->udpport();
-	for(int i=0; i<host_adr.size() && udpnum < 32; i++)
+	for (size_t i = 0; i<host_adr.size() && udpnum < 32; i++)
 		open_udpsock(host_adr[i]);
 	if(udpnum == 0) {
 		skelton_msgbox("Net::Net: Opening default INADDR_ANY udp...\n");
@@ -820,7 +820,7 @@ int Net::open_udpsock(uint32_t adr) {
 }
 
 void Net::step(bool loop_only) {
-	int i;
+	size_t i;
 	for(i=0; i<connections.size(); i++)
 		if(connections[i]) {
 			connections[i]->incoming_inactive++;
@@ -864,7 +864,7 @@ void Net::step(bool loop_only) {
 					ADD_SOCK(tcpsock);
 		}
 		if(!loop_only)
-			for(i=0; i<udpnum; i++)
+			for(int j=0; j<udpnum; j++)
 				ADD_SOCK(udpsock[i]);
 
 		#undef ADD_SOCK
@@ -887,10 +887,10 @@ void Net::step(bool loop_only) {
 				break;
 		}
 
-		for(i=0; i<udpnum; i++)
-			if(FD_ISSET(udpsock[i], &fdsoc)) {
+		for(int j=0; j<udpnum; j++)
+			if(FD_ISSET(udpsock[j], &fdsoc)) {
 				Net_buf nb;
-				receiveudp(udpsock[i], &nb);
+				receiveudp(udpsock[j], &nb);
 				packetreceived(&nb, false);
 			}
 		if(client_connection) {
@@ -905,8 +905,7 @@ void Net::step(bool loop_only) {
 				verify_server_connection(); // verify if server has been disconnected
 			}
 		}
-		int co;
-		for(co=0; co<connections.size(); co++) {
+		for (size_t co = 0; co<connections.size(); co++) {
 			Net_connection *nc=connections[co];
 			bool isset=false;
 			int tcpsock=nc->getFD();
@@ -961,8 +960,7 @@ void Net::step(bool loop_only) {
 
 void Net::verify_connections() {
 	bool change=false;
-	int i;
-	for(i=0; i<connections.size(); i++) {
+	for (size_t i = 0; i<connections.size(); i++) {
 		Net_connection *nc=connections[i];
 		if(nc->state()==Net_connection::disconnected) {
 			net_param->client_deconnect(nc);
@@ -1085,7 +1083,7 @@ void Net::dispatch(Packet *p, uint32_t pt, Net_connection *nc) {
 	if(!p)
 		return;
 	p->packet_id=pt;
-	for(int i=0; i<connections.size(); i++) {
+	for (size_t i = 0; i<connections.size(); i++) {
 		Net_connection *nc2=connections[i];
 		if(nc2!=nc && nc2->packet_based && net_param->is_dispatchable(nc2, p)) {
 			connections[i]->sendtcp(p);

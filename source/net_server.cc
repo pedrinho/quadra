@@ -570,11 +570,10 @@ void Net_server::clientmoves(Packet *p2) {
 	Canvas *c=game->net_list.get(p->player);
 	if(!c)
 		return;
-	int i;
-	for(i=0; i<net->connections.size(); i++) {
+	for (size_t i = 0; i<net->connections.size(); i++) {
 		Net_connection *nc=net->connections[i];
 		if(nc)
-			for(int j=0; j<c->watchers.size(); j++) {
+			for (size_t j = 0; j<c->watchers.size(); j++) {
 				Canvas::Watcher *w=c->watchers[j];
 				if(w && w->nc==nc)
 					net->sendtcp(nc, p);
@@ -765,8 +764,7 @@ void Net_pendingjoin::step() {
 
 void Net_pendingjoin::notify() {
 	//Check whether the connection got closed and cancel if applicable
-	int co;
-	for(co=0; co<net->connections.size(); co++)
+	for (size_t co = 0; co<net->connections.size(); co++)
 		if(net->connections[co]==pac->from)
 			return;
 	cancel=true; //Will cancel on next step()

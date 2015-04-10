@@ -39,7 +39,7 @@ void Observable::remove_watch(Notifyable *n) {
 }
 
 void Observable::notify_all() {
-	for (int i = 0; i < notes.size(); ++i)
+	for (size_t i = 0; i < notes.size(); ++i)
 		notes[i]->notify();
 }
 

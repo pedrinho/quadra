@@ -54,7 +54,7 @@ void Overmind::step() {
 	if(paused)
 		return;
 	framecount++;
-	for(int i=0; i<execs.size(); i++) {
+	for (size_t i = 0; i<execs.size(); i++) {
 		Executor *e = execs[i];
 		if(!e) {
 			execs.erase(execs.begin() + i);
@@ -79,7 +79,7 @@ void Overmind::start(Executor* e) {
 }
 
 void Overmind::stop(Executor* e) {
-	for(int i=0; i<execs.size(); i++) {
+	for (size_t i = 0; i<execs.size(); i++) {
 		if(e == execs[i]) {
 			if(e->self_destruct)
 				delete e;

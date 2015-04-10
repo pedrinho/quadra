@@ -134,7 +134,7 @@ void addfile(Resfile& wad, const string& fname) {
   res.seekg(0, res.beg);
 
   string data;
-  data.resize(length, 0);
+  data.resize(static_cast<size_t>(length), 0);
   res.read(&*data.begin(), length);
 
   wad.add(path(fname).filename().string().c_str(), data.size(), data.data());

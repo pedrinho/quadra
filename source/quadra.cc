@@ -30,7 +30,6 @@
 #include "SDL.h"
 
 #ifdef WIN32
-#define _WIN32_IE 0x0500
 #include <shlobj.h>
 #else
 #include <pwd.h>
